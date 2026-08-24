@@ -33,37 +33,3 @@ Docker is not required.
 | shipments | `{ warehouseRegion: 1, shipmentId: 1 }` |
 
 `products` is intentionally unsharded as a shared global catalog.
-
-## Start an already-initialized cluster
-
-```powershell
-.\scripts\start-cluster.ps1
-```
-
-## Connect
-
-```powershell
-mongosh --port 27017
-```
-
-If `mongosh` is not in PATH, use the full path to `mongosh.exe`.
-
-## Seed demo data
-
-```powershell
-mongosh --port 27017 --file .\scripts\seed-data.js
-```
-
-## Verify fragmentation
-
-```powershell
-mongosh --port 27017 --file .\scripts\verify-fragmentation.js
-```
-
-## Stop the cluster
-
-```powershell
-.\scripts\stop-cluster.ps1
-```
-
-The three database sites are simulated as separate MongoDB processes on one Windows machine.
