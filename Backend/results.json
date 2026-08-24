@@ -1,0 +1,191 @@
+{
+  "timestamp": "2026-08-24T22:39:41.292906",
+  "query1": {
+    "description": "Regional Sales Report (Targeted - EGYPT)",
+    "before": {
+      "results_count": 0,
+      "wall_clock_ms": 331.57,
+      "total_keys_examined": 0,
+      "total_docs_examined": 0,
+      "n_returned": 0,
+      "execution_time_ms": 0,
+      "shards_info": [
+        {
+          "shard": "rsEurope",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsUSA",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsEgypt",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        }
+      ],
+      "shards_accessed": 3
+    },
+    "after": {
+      "results_count": 0,
+      "wall_clock_ms": 69.41,
+      "total_keys_examined": 0,
+      "total_docs_examined": 0,
+      "n_returned": 0,
+      "execution_time_ms": 0,
+      "shards_info": [
+        {
+          "shard": "rsEgypt",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsEurope",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsUSA",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        }
+      ],
+      "shards_accessed": 3
+    },
+    "improvement_pct": 79.1
+  },
+  "query2": {
+    "description": "Low-Stock Products (Scatter-Gather)",
+    "before": {
+      "results_count": 5,
+      "wall_clock_ms": 263.08,
+      "total_keys_examined": 0,
+      "total_docs_examined": 0,
+      "n_returned": 5,
+      "execution_time_ms": 0,
+      "shards_info": [
+        {
+          "shard": "rsEgypt",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsEurope",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsUSA",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        }
+      ],
+      "shards_accessed": 3
+    },
+    "after": {
+      "results_count": 5,
+      "wall_clock_ms": 478.72,
+      "total_keys_examined": 0,
+      "total_docs_examined": 0,
+      "n_returned": 5,
+      "execution_time_ms": 0,
+      "shards_info": [
+        {
+          "shard": "rsEgypt",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsEurope",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        },
+        {
+          "shard": "rsUSA",
+          "docsExamined": 0,
+          "keysExamined": 0,
+          "nReturned": 0,
+          "executionTimeMillis": 0
+        }
+      ],
+      "shards_accessed": 3
+    },
+    "improvement_pct": -82.0
+  },
+  "indexes_created": [
+    {
+      "collection": "orders",
+      "name": "idx_orders_region_status",
+      "keys": "region:1, status:1"
+    },
+    {
+      "collection": "customers",
+      "name": "idx_customers_customerId",
+      "keys": "customerId:1"
+    },
+    {
+      "collection": "orderItems",
+      "name": "idx_orderItems_orderId",
+      "keys": "orderId:1"
+    },
+    {
+      "collection": "orderItems",
+      "name": "idx_orderItems_productId",
+      "keys": "productId:1"
+    },
+    {
+      "collection": "products",
+      "name": "idx_products_productId",
+      "keys": "productId:1"
+    },
+    {
+      "collection": "payments",
+      "name": "idx_payments_orderId",
+      "keys": "orderId:1"
+    },
+    {
+      "collection": "shipments",
+      "name": "idx_shipments_orderId",
+      "keys": "orderId:1"
+    },
+    {
+      "collection": "inventory",
+      "name": "idx_inventory_qty_reserved",
+      "keys": "quantity:1, reservedQuantity:1"
+    },
+    {
+      "collection": "inventory",
+      "name": "idx_inventory_warehouseId",
+      "keys": "warehouseId:1"
+    },
+    {
+      "collection": "warehouses",
+      "name": "idx_warehouses_warehouseId",
+      "keys": "warehouseId:1"
+    }
+  ]
+}
