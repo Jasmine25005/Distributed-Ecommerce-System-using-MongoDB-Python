@@ -80,12 +80,13 @@ QUERY1 = [
 ]
 
 QUERY2 = [
-    {"$match":{"$expr":{"$lte":[{"$subtract":["$quantity","$reservedQuantity"]},50]},"quantity":{"$gt":0}}},
+    {"$match":{"quantity":{"$gt":0}}},
+    {"$addFields":{"availableQuantity":{"$subtract":["$quantity","$reservedQuantity"]}}},
+    {"$match":{"availableQuantity":{"$lte":50}}},
     {"$lookup":{"from":"products","localField":"productId","foreignField":"productId","as":"product_info"}},
     {"$unwind":{"path":"$product_info","preserveNullAndEmptyArrays":True}},
     {"$lookup":{"from":"warehouses","localField":"warehouseId","foreignField":"warehouseId","as":"warehouse_info"}},
     {"$unwind":{"path":"$warehouse_info","preserveNullAndEmptyArrays":True}},
-    {"$addFields":{"availableQuantity":{"$subtract":["$quantity","$reservedQuantity"]}}},
     {"$sort":{"availableQuantity":1,"region":1}},
     {"$project":{"_id":0,"inventoryId":1,"productId":1,"productName":"$product_info.name","category":"$product_info.category","price":"$product_info.price","warehouseId":1,"warehouseName":"$warehouse_info.name","warehouseCity":"$warehouse_info.location.city","region":1,"quantity":1,"reservedQuantity":1,"availableQuantity":1}}
 ]
@@ -115,7 +116,6 @@ def main():
         print(f"\n  [ERROR] {e}")
         return
 
-    # Check sharding
     try:
         shards = db.command("listShards").get("shards", [])
         print(f"  [OK] Sharded cluster: {len(shards)} shards")
@@ -124,7 +124,6 @@ def main():
     except:
         print("  [INFO] Standalone MongoDB (not sharded)")
 
-    # Check data
     colls = ["orders","customers","orderItems","products","payments","shipments","inventory","warehouses"]
     total = 0
     print("\n  Existing data:")
@@ -138,7 +137,6 @@ def main():
         print("  [ERROR] No data found! Run Task 1 first.")
         return
 
-    # Check if collection name is orderitems (lowercase) or orderItems (camelCase)
     real_name = "orderItems"
     if db["orderItems"].count_documents({}) == 0 and db["orderitems"].count_documents({}) > 0:
         real_name = "orderitems"
@@ -155,7 +153,6 @@ def main():
     print("\n  >> Query 2 (Low-Stock Products) WITHOUT indexes...")
     q2b = run_aggregation("inventory", QUERY2)
     print_metrics(q2b)
-
 
     print_separator("PHASE 2: CREATING INDEXES")
     for idx in INDEXES:
@@ -179,7 +176,6 @@ def main():
     print("\nQuery 2: Low-Stock Products")
     print_comparison(q2b, q2a)
 
-    # Save results to JSON
     def calc_imp(bv, av):
         if bv > 0: return round(((bv-av)/bv)*100, 1)
         return 0.0
