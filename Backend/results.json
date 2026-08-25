@@ -1,29 +1,15 @@
 {
-  "timestamp": "2026-08-24T22:39:41.292906",
+  "timestamp": "2026-08-25T05:02:35.228417",
   "query1": {
     "description": "Regional Sales Report (Targeted - EGYPT)",
     "before": {
-      "results_count": 0,
-      "wall_clock_ms": 331.57,
+      "results_count": 3,
+      "wall_clock_ms": 330.7,
       "total_keys_examined": 0,
       "total_docs_examined": 0,
-      "n_returned": 0,
+      "n_returned": 3,
       "execution_time_ms": 0,
       "shards_info": [
-        {
-          "shard": "rsEurope",
-          "docsExamined": 0,
-          "keysExamined": 0,
-          "nReturned": 0,
-          "executionTimeMillis": 0
-        },
-        {
-          "shard": "rsUSA",
-          "docsExamined": 0,
-          "keysExamined": 0,
-          "nReturned": 0,
-          "executionTimeMillis": 0
-        },
         {
           "shard": "rsEgypt",
           "docsExamined": 0,
@@ -32,14 +18,14 @@
           "executionTimeMillis": 0
         }
       ],
-      "shards_accessed": 3
+      "shards_accessed": 1
     },
     "after": {
-      "results_count": 0,
-      "wall_clock_ms": 69.41,
+      "results_count": 3,
+      "wall_clock_ms": 90.92,
       "total_keys_examined": 0,
       "total_docs_examined": 0,
-      "n_returned": 0,
+      "n_returned": 3,
       "execution_time_ms": 0,
       "shards_info": [
         {
@@ -48,31 +34,17 @@
           "keysExamined": 0,
           "nReturned": 0,
           "executionTimeMillis": 0
-        },
-        {
-          "shard": "rsEurope",
-          "docsExamined": 0,
-          "keysExamined": 0,
-          "nReturned": 0,
-          "executionTimeMillis": 0
-        },
-        {
-          "shard": "rsUSA",
-          "docsExamined": 0,
-          "keysExamined": 0,
-          "nReturned": 0,
-          "executionTimeMillis": 0
         }
       ],
-      "shards_accessed": 3
+      "shards_accessed": 1
     },
-    "improvement_pct": 79.1
+    "improvement_pct": 72.5
   },
   "query2": {
     "description": "Low-Stock Products (Scatter-Gather)",
     "before": {
       "results_count": 5,
-      "wall_clock_ms": 263.08,
+      "wall_clock_ms": 118.15,
       "total_keys_examined": 0,
       "total_docs_examined": 0,
       "n_returned": 5,
@@ -86,14 +58,14 @@
           "executionTimeMillis": 0
         },
         {
-          "shard": "rsEurope",
+          "shard": "rsUSA",
           "docsExamined": 0,
           "keysExamined": 0,
           "nReturned": 0,
           "executionTimeMillis": 0
         },
         {
-          "shard": "rsUSA",
+          "shard": "rsEurope",
           "docsExamined": 0,
           "keysExamined": 0,
           "nReturned": 0,
@@ -104,7 +76,7 @@
     },
     "after": {
       "results_count": 5,
-      "wall_clock_ms": 478.72,
+      "wall_clock_ms": 43.91,
       "total_keys_examined": 0,
       "total_docs_examined": 0,
       "n_returned": 5,
@@ -134,13 +106,13 @@
       ],
       "shards_accessed": 3
     },
-    "improvement_pct": -82.0
+    "improvement_pct": 62.8
   },
   "indexes_created": [
     {
       "collection": "orders",
       "name": "idx_orders_region_status",
-      "keys": "region:1, status:1"
+      "keys": "customerRegion:1, status:1"
     },
     {
       "collection": "customers",

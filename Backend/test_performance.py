@@ -62,8 +62,9 @@ def print_comparison(b, a):
         imp = f"{round(((bv-av)/bv)*100,1)}%" if bv > 0 else ("no change" if bv==av else "N/A")
         print(f"  {label:<25} {bv:>12} {av:>12} {imp:>14}")
 
+# تم التعديل هنا لتطابق قاعدة البيانات الجديدة (customerRegion و Capital Status)
 QUERY1 = [
-    {"$match":{"region":"EGYPT","status":{"$in":["completed","shipped","processing"]}}},
+    {"$match":{"customerRegion":"EGYPT","status":{"$in":["DELIVERED","SHIPPED","PENDING"]}}},
     {"$lookup":{"from":"customers","let":{"custId":"$customerId"},"pipeline":[{"$match":{"$expr":{"$eq":["$customerId","$$custId"]}}},{"$project":{"_id":0,"customerId":1,"name":1,"email":1}}],"as":"customer_info"}},
     {"$unwind":{"path":"$customer_info","preserveNullAndEmptyArrays":True}},
     {"$lookup":{"from":"orderItems","localField":"orderId","foreignField":"orderId","as":"items"}},
@@ -91,8 +92,9 @@ QUERY2 = [
     {"$project":{"_id":0,"inventoryId":1,"productId":1,"productName":"$product_info.name","category":"$product_info.category","price":"$product_info.price","warehouseId":1,"warehouseName":"$warehouse_info.name","warehouseCity":"$warehouse_info.location.city","region":1,"quantity":1,"reservedQuantity":1,"availableQuantity":1}}
 ]
 
+# تم التعديل هنا أيضاً ليطابق customerRegion
 INDEXES = [
-    {"collection":"orders","keys":[("region",1),("status",1)],"name":"idx_orders_region_status"},
+    {"collection":"orders","keys":[("customerRegion",1),("status",1)],"name":"idx_orders_region_status"},
     {"collection":"customers","keys":[("customerId",1)],"name":"idx_customers_customerId"},
     {"collection":"orderItems","keys":[("orderId",1)],"name":"idx_orderItems_orderId"},
     {"collection":"orderItems","keys":[("productId",1)],"name":"idx_orderItems_productId"},
