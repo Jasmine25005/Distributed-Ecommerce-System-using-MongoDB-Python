@@ -20,5 +20,7 @@ Stop-PortProcess 27019
 Stop-PortProcess 27101
 Stop-PortProcess 27102
 Stop-PortProcess 27103
+Stop-PortProcess 27111
+Stop-PortProcess 27112
 
 Write-Host "Cluster processes stopped."
