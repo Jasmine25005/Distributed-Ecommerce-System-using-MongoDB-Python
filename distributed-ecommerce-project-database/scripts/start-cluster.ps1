@@ -1,6 +1,25 @@
 $ErrorActionPreference = "Stop"
 
-$MongoBin = "C:\Program Files\MongoDB\Server\8.3\bin"
+$MongoPaths = @(
+    "C:\Program Files\MongoDB\Server\8.3\bin",
+    "C:\Program Files\MongoDB\Server\8.0\bin"
+)
+
+$MongoBin = $null
+
+foreach ($path in $MongoPaths) {
+    if ((Test-Path (Join-Path $path "mongod.exe")) -and
+        (Test-Path (Join-Path $path "mongos.exe"))) {
+        $MongoBin = $path
+        break
+    }
+}
+
+if (!$MongoBin) {
+    throw "MongoDB installation not found. Checked: $($MongoPaths -join ', ')"
+}
+
+Write-Host "Using MongoDB from: $MongoBin"
 $BaseDir  = "C:\mongodb-ddb"
 
 $mongod = Join-Path $MongoBin "mongod.exe"
@@ -11,6 +30,8 @@ if (!(Test-Path $mongos)) { throw "mongos.exe not found at $mongos" }
 
 New-Item -ItemType Directory -Force -Path "$BaseDir\config" | Out-Null
 New-Item -ItemType Directory -Force -Path "$BaseDir\egypt"  | Out-Null
+New-Item -ItemType Directory -Force -Path "$BaseDir\egypt-secondary1" | Out-Null
+New-Item -ItemType Directory -Force -Path "$BaseDir\egypt-secondary2" | Out-Null
 New-Item -ItemType Directory -Force -Path "$BaseDir\europe" | Out-Null
 New-Item -ItemType Directory -Force -Path "$BaseDir\usa"    | Out-Null
 
@@ -21,6 +42,12 @@ Start-Sleep -Seconds 2
 
 Write-Host "Starting Egypt shard..."
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "& '$mongod' --shardsvr --replSet rsEgypt --port 27101 --dbpath '$BaseDir\egypt' --bind_ip localhost"
+
+Write-Host "Starting Egypt secondary 1..."
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "& '$mongod' --shardsvr --replSet rsEgypt --port 27111 --dbpath '$BaseDir\egypt-secondary1' --bind_ip localhost"
+
+Write-Host "Starting Egypt secondary 2..."
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "& '$mongod' --shardsvr --replSet rsEgypt --port 27112 --dbpath '$BaseDir\egypt-secondary2' --bind_ip localhost"
 
 Write-Host "Starting Europe shard..."
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "& '$mongod' --shardsvr --replSet rsEurope --port 27102 --dbpath '$BaseDir\europe' --bind_ip localhost"
